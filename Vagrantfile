@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/vivid32"
   config.vm.hostname = "mininet-vm"
 
 
@@ -41,8 +41,9 @@ Vagrant.configure(2) do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
 
-  config.vm.synced_folder "valve/", "/home/vagrant/valve/"
-  config.vm.synced_folder "projects/", "/home/vagrant/projects"
+  # config.vm.synced_folder "valve/", "/home/vagrant/valve/"
+  # config.vm.synced_folder "projects/", "/home/vagrant/projects/"
+  # config.vm.synced_folder "mininet/", "/home/vagrant/mininet/"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -70,11 +71,11 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get update
-    sudo apt-get dist-upgrade -y
-    sudo apt-get install -y language-pack-en mininet python-setuptools python-pip python-eventlet python-lxml python-yaml python-msgpack unzip wget git
-    sudo apt-get autoremove -y
-    sudo apt-get autoclean -y
-    sudo pip install ryu
+      sudo apt-get update
+      sudo apt-get dist-upgrade -y
+      sudo apt-get install -y language-pack-en mininet python-{pip,dev,eventlet,routes,webob,paramiko,yaml} git curl
+      sudo pip install ryu
+      sudo apt-get autoremove -y
+      sudo apt-get autoclean -y
   SHELL
 end
